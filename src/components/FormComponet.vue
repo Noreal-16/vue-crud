@@ -44,7 +44,6 @@ export default {
       this.title = ''
       this.body = ''
       this.userId = ''
-      this.$refs.observer.reset()
     }
   },
 }

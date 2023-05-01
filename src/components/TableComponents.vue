@@ -26,9 +26,7 @@
                 <td>{{ item.body }}</td>
                 <td>{{ item.userId }}</td>
                 <td style="display: flex; justify-content: center; align-items: center;">
-                    <v-btn class="text-none text-subtitle-1 d-flex justify-content-center" color="teal-darken-1"
-                        size="small" variant="outlined" prepend-icon="mdi-pencil">
-                    </v-btn>
+                        <ModalUpdateComponent :idPosts="item.id"/>
                     <v-btn class="text-none text-subtitle-1 d-flex justify-content-center" color="red-darken-4" size="small"
                         variant="outlined" prepend-icon="mdi-delete-forever" @click="deleteById(item.id)">
                     </v-btn>
@@ -38,7 +36,11 @@
     </v-table>
 </template>
 <script>
+import ModalUpdateComponent from './ModalUpdateComponent.vue';
 export default {
+    components: {
+        ModalUpdateComponent
+    },
     data() {
         return {
             desserts: [],
@@ -57,7 +59,7 @@ export default {
         },
         deleteById(id) {
             fetch(`https://jsonplaceholder.typicode.com/posts/${id}`,
-                { method: 'DELETE' }).then((data)=>{
+                { method: 'DELETE' }).then((data) => {
                     if (data.status === 200) {
                         console.log(`Registro con Id ${id} eliminado satisfactoriamente`)
                     }
