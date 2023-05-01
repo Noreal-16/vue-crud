@@ -19,7 +19,7 @@
                     <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
                     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId"
                         required></v-text-field>
-                    <v-btn class="mr-4" type="submit" :disabled="invalid">
+                    <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined"  :disabled="invalid">
                         Actualizar
                     </v-btn>
                 </form>

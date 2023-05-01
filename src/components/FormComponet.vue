@@ -6,9 +6,10 @@
     <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
       Registrar
     </v-btn>
-    <v-btn color="red-darken-4" variant="outlined" @click="Borrar">
-      clear
-    </v-btn>
+    <v-btn color="red-darken-4" variant="outlined" @click="redirection" >
+        Cancelar
+      </v-btn>
+
   </form>
 </template>
 
@@ -50,6 +51,9 @@ export default {
       this.title = ''
       this.body = ''
       this.userId = ''
+    },
+    redirection(){
+      window.location.href='/'
     }
   },
 }
