@@ -11,12 +11,17 @@
                 <v-list dense nav>
                     <v-list-item @click="changeView('registro')" prepend-icon="mdi-plus" title="Registrar Posts"
                         value="myfiles"></v-list-item>
+                    <v-list-item @click="changeView('gallery')" prepend-icon="mdi-image-album" title="Galeria"
+                        value="myfiles"></v-list-item>
                 </v-list>
             </v-navigation-drawer>
 
-            <v-main style="height: 90vh; padding-left: 18%">
+            <v-main style="height: auto; padding-left: 18%">
                 <div v-if="views === 'registro'" style="margin-top: 5vh;">
                     <form-componet />
+                </div>
+                <div v-else-if="views === 'gallery'" style="margin-top: 5vh;">
+                    <gallery-components />
                 </div>
                 <div v-else style="margin-top: 10vh; margin-left: 5vh; margin-right: 4vh;">
                     <table-components />
@@ -29,6 +34,7 @@
 <script >
 import FormComponet from './FormComponet.vue';
 import TableComponents from './TableComponents.vue';
+import GalleryComponents from './GalleryComponents.vue';
 export default {
     data() {
         return {
@@ -42,7 +48,8 @@ export default {
     },
     components: {
         FormComponet,
-        TableComponents
+        TableComponents,
+        GalleryComponents
     }
 }
 </script>

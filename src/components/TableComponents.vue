@@ -1,5 +1,5 @@
 <template>
-    <v-table fixed-header height="300px">
+    <v-table fixed-header height="300px" style="margin-bottom: 10vh;">
         <thead>
             <tr>
                 <th class="text-left">

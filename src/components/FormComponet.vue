@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent="registerPost">
+  <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh;">
     <v-text-field v-model="title" name="title" :counter="10" label="Title" required></v-text-field>
     <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId" required></v-text-field>
