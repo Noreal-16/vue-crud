@@ -7,19 +7,19 @@
                     <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" title="Sandra Adams"
                         subtitle="sandra_a88@gmailcom"></v-list-item>
                 </v-list>
-
                 <v-divider></v-divider>
                 <v-list dense nav>
-                    <v-list-item @click="changeView('registro')" prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-                    <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-                    <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+                    <v-list-item @click="changeView('registro')" prepend-icon="mdi-plus" title="Registrar Posts"
+                        value="myfiles"></v-list-item>
                 </v-list>
             </v-navigation-drawer>
 
             <v-main style="height: 90vh; padding-left: 18%">
-                <h1 style="padding: 0px 50px;">Hola Mundo</h1>
-                <div v-if="views === 'registro'">
-                    <form-componet/>
+                <div v-if="views === 'registro'" style="margin-top: 5vh;">
+                    <form-componet />
+                </div>
+                <div v-else style="margin-top: 10vh; margin-left: 5vh; margin-right: 4vh;">
+                    <table-components />
                 </div>
                 <router-view />
             </v-main>
@@ -28,19 +28,21 @@
 </template>
 <script >
 import FormComponet from './FormComponet.vue';
+import TableComponents from './TableComponents.vue';
 export default {
     data() {
         return {
             views: null
         }
     },
-    methods:{
-        changeView(view){
+    methods: {
+        changeView(view) {
             this.views = view;
         }
     },
-    components:{
-        FormComponet
+    components: {
+        FormComponet,
+        TableComponents
     }
 }
 </script>

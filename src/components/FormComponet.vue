@@ -1,13 +1,8 @@
 <template>
-  <form class="form" @submit.prevent="submit">
-    <v-text-field v-model="name" :counter="10" :error-messages="errors" label="Name" required></v-text-field>
-    <v-text-field v-model="phoneNumber" :counter="7" :error-messages="errors" label="Phone Number"
-      required></v-text-field>
-    <v-text-field v-model="email" :error-messages="errors" label="E-mail" required></v-text-field>
-    <v-select v-model="select" :items="items" :error-messages="errors" label="Select" data-vv-name="select"
-      required></v-select>
-    <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option" type="checkbox"
-      required></v-checkbox>
+  <form class="form" @submit.prevent="registerPost">
+    <v-text-field v-model="title" name="title" :counter="10" label="Title" required></v-text-field>
+    <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
+    <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId" required></v-text-field>
     <v-btn class="mr-4" type="submit" :disabled="invalid">
       submit
     </v-btn>
@@ -22,28 +17,35 @@ export default {
   components: {
   },
   data: () => ({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    select: null,
-    items: [
-      'Item 1',
-      'Item 2',
-      'Item 3',
-      'Item 4',
-    ],
-    checkbox: null,
+    title: '',
+    body: '',
+    userId: '',
   }),
 
   methods: {
-    clear() {
-      this.name = ''
-      this.phoneNumber = ''
-      this.email = ''
-      this.select = null
-      this.checkbox = null
-      this.$refs.observer.reset()
+    registerPost() {
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: this.title,
+          body: this.body,
+          userId: this.userId
+        }), headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((dataResponse) => {
+          console.log(dataResponse)
+          window.location.href ='/'
+        })
     },
+    clear() {
+      this.title = ''
+      this.body = ''
+      this.userId = ''
+      this.$refs.observer.reset()
+    }
   },
 }
 </script>
