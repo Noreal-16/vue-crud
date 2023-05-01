@@ -3,10 +3,10 @@
     <v-text-field v-model="title" name="title" :counter="10" label="Title" required></v-text-field>
     <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId" required></v-text-field>
-    <v-btn class="mr-4" type="submit" :disabled="invalid">
-      submit
+    <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
+      Registrar
     </v-btn>
-    <v-btn @click="clear">
+    <v-btn color="red-darken-4" variant="outlined" @click="Borrar">
       clear
     </v-btn>
   </form>
@@ -36,8 +36,14 @@ export default {
       })
         .then((response) => response.json())
         .then((dataResponse) => {
-          console.log(dataResponse)
-          window.location.href ='/'
+          this.$swal({
+            position: 'top-end',
+            icon: 'success',
+            title: `Se registro título ${dataResponse.title} correctamente`,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => window.location.href = '/')
+
         })
     },
     clear() {

@@ -11,16 +11,10 @@
                     <v-btn icon dark @click="dialog = false">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Settings</v-toolbar-title>
+                    <v-toolbar-title>Actualizar Posts</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-toolbar-items>
-                        <v-btn variant="text" @click="dialog = false">
-                            Save
-                        </v-btn>
-                    </v-toolbar-items>
                 </v-toolbar>
                 <form @submit.prevent="updatePosts">
-                    <h1>{{ idPosts }}</h1>
                     <v-text-field v-model="title" name="title" :counter="10" label="Title" required></v-text-field>
                     <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
                     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId"
@@ -78,7 +72,16 @@ export default {
                 },
             })
                 .then((response) => response.json())
-                .then((json) => console.log(json))
+                .then((json) => {
+                    console.log(json)
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Se Actualizó título ${json.title} correctamente`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
         }
     }
 }

@@ -26,7 +26,7 @@
                 <td>{{ item.body }}</td>
                 <td>{{ item.userId }}</td>
                 <td style="display: flex; justify-content: center; align-items: center;">
-                        <ModalUpdateComponent :idPosts="item.id"/>
+                    <ModalUpdateComponent :idPosts="item.id" />
                     <v-btn class="text-none text-subtitle-1 d-flex justify-content-center" color="red-darken-4" size="small"
                         variant="outlined" prepend-icon="mdi-delete-forever" @click="deleteById(item.id)">
                     </v-btn>
@@ -58,12 +58,24 @@ export default {
                 }).catch(console.log)
         },
         deleteById(id) {
-            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`,
-                { method: 'DELETE' }).then((data) => {
-                    if (data.status === 200) {
-                        console.log(`Registro con Id ${id} eliminado satisfactoriamente`)
-                    }
-                })
+            this.$swal({
+                title: `Seguro que desea eliminar el posts ${id}?`,
+                showDenyButton: true,
+                confirmButtonText: 'Eliminar',
+                denyButtonText: `Cancelar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`,
+                        { method: 'DELETE' }).then((data) => {
+                            if (data.status === 200) {
+                                this.$swal.fire(`Registro con Id ${id} eliminado satisfactoriamente`, '', 'success')
+                            }
+                        })
+                } else if (result.isDenied) {
+                    this.$swal('No se guardaron los cambios', '', 'info')
+                }
+            })
+
         }
     }
 }
