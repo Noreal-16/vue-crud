@@ -3,16 +3,16 @@
         <thead>
             <tr>
                 <th class="text-left">
-                    Id
+                    Nro.
                 </th>
                 <th class="text-left">
-                    Title
+                    Título
                 </th>
                 <th class="text-left">
-                    Body
+                    Cuerpo
                 </th>
                 <th class="text-left">
-                    UserId
+                    Id Usuario
                 </th>
                 <th class="text-left">
                     Acciones
@@ -37,26 +37,25 @@
 </template>
 <script>
 import ModalUpdateComponent from './ModalUpdateComponent.vue';
+import dataPost from '../utils/data';
+
+import mitt from 'mitt'
+const emitter = mitt();
 export default {
     components: {
         ModalUpdateComponent
     },
     data() {
         return {
-            desserts: [],
+            desserts: []
         }
-    },
-    created: function () {
-        this.getDataPosts();
+    }, mounted() {
+        this.desserts = dataPost,
+        emitter.on('post-updated', () => {
+            this.desserts = dataPost;
+        });
     },
     methods: {
-        getDataPosts() {
-            fetch('https://jsonplaceholder.typicode.com/posts')
-                .then(response => response.json())
-                .then((dataResponse) => {
-                    this.desserts = dataResponse
-                }).catch(console.log)
-        },
         deleteById(id) {
             this.$swal({
                 title: `Seguro que desea eliminar el posts ${id}?`,
@@ -65,18 +64,16 @@ export default {
                 denyButtonText: `Cancelar`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`,
-                        { method: 'DELETE' }).then((data) => {
-                            if (data.status === 200) {
-                                this.$swal.fire(`Registro con Id ${id} eliminado satisfactoriamente`, '', 'success')
-                            }
-                        })
+                    let indiceArray = this.desserts.findIndex((item) => item.id === id);
+                    if (indiceArray !== -1) {
+                        this.desserts.splice(indiceArray, 1);
+                    }
                 } else if (result.isDenied) {
                     this.$swal('No se guardaron los cambios', '', 'info')
                 }
             })
 
         }
-    }
+    },
 }
 </script>

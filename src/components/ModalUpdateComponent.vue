@@ -19,7 +19,7 @@
                     <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
                     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId"
                         required></v-text-field>
-                    <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined"  :disabled="invalid">
+                    <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
                         Actualizar
                     </v-btn>
                 </form>
@@ -29,6 +29,10 @@
     </v-row>
 </template>
 <script>
+import dataPost from '../utils/data';
+
+import mitt from 'mitt'
+const emtter = mitt();
 export default {
     props: {
         idPosts: Number
@@ -46,42 +50,39 @@ export default {
         }
     },
     mounted() {
-        this.getPostById()
+        this.getPostById(),
+            this.desserts = dataPost
     },
     methods: {
         getPostById() {
-            fetch(`https://jsonplaceholder.typicode.com/posts/${this.idPosts}`)
-                .then((response) => response.json())
-                .then((json) => {
-                    this.title = json.title;
-                    this.body = json.body;
-                    this.userId = json.userId
-                });
+            const dataFind = dataPost.find(post => post.id === this.idPosts);
+            if (dataFind) {
+                this.title = dataFind.title;
+                this.body = dataFind.body;
+                this.userId = dataFind.userId;
+            }
+
         },
         updatePosts() {
-            fetch(`https://jsonplaceholder.typicode.com/posts/${this.idPosts}`, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    id: this.idPosts,
-                    title: this.title,
-                    body: this.body,
-                    userId: this.userId,
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then((response) => response.json())
-                .then((json) => {
-                    console.log(json)
-                    this.$swal({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: `Se Actualizó título ${json.title} correctamente`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+            const dataFind = dataPost.find(post => post.id === this.idPosts);
+            if (dataFind) {
+                dataFind.id = this.idPosts;
+                dataFind.title = this.title;
+                dataFind.body = this.body;
+                dataFind.userId = this.userId;
+                console.log(dataFind.title)
+                this.$swal({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: `Se Actualizó título ${dataFind.title} correctamente`,
+                    showConfirmButton: false,
+                    timer: 1500
                 })
+                    this.dialog = false
+                    emtter.emit('post-updated')
+               
+
+            }
         }
     }
 }

@@ -1,19 +1,20 @@
 <template>
   <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh;">
-    <v-text-field v-model="title" name="title" :counter="10" label="Title" required></v-text-field>
-    <v-text-field v-model="body" name="body" :counter="10" label="Body" required></v-text-field>
-    <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="UserId" required></v-text-field>
+    <v-text-field v-model="title" name="title" :counter="10" label="Título" required></v-text-field>
+    <v-text-field v-model="body" name="body" :counter="10" label="Cuerpo" required></v-text-field>
+    <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="Id Usuario" required></v-text-field>
     <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
       Registrar
     </v-btn>
-    <v-btn color="red-darken-4" variant="outlined" @click="redirection" >
-        Cancelar
-      </v-btn>
+    <v-btn color="red-darken-4" variant="outlined" @click="redirection">
+      Cancelar
+    </v-btn>
 
   </form>
 </template>
 
 <script>
+import dataPost from '../utils/data';
 export default {
   components: {
   },
@@ -25,35 +26,43 @@ export default {
 
   methods: {
     registerPost() {
-      fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: JSON.stringify({
-          title: this.title,
-          body: this.body,
-          userId: this.userId
-        }), headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
-        .then((response) => response.json())
-        .then((dataResponse) => {
-          this.$swal({
-            position: 'top-end',
-            icon: 'success',
-            title: `Se registro título ${dataResponse.title} correctamente`,
-            showConfirmButton: false,
-            timer: 1500
-          }).then(() => window.location.href = '/')
 
+      if (!this.title && !this.body && !this.userId) {
+        this.$swal({
+          position: 'top-end',
+          icon: 'error',
+          title: `Los campos del formulario son requeridos por favor completarlos`,
+          showConfirmButton: false,
+          timer: 1500
         })
+      }
+
+      const dataForm = {
+        id: dataPost.length + 1,
+        title: this.title,
+        body: this.body,
+        userId: this.userId
+      }
+
+      dataPost.push(dataForm);
+      this.$swal({
+        position: 'top-end',
+        icon: 'success',
+        title: `Se registro título ${dataForm.title} correctamente`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      console.log(dataPost)
+      this.clear();
     },
     clear() {
       this.title = ''
       this.body = ''
       this.userId = ''
     },
-    redirection(){
-      window.location.href='/'
+    redirection() {
+      window.location.href = '/'
     }
   },
 }
