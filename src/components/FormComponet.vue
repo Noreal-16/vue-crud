@@ -1,22 +1,29 @@
 <template>
-  <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh;">
+  <app-bar-component/>
+  <side-bar-menu>
+  <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh; margin-top: 10vh;">
     <v-text-field v-model="title" name="title" :counter="10" label="Título" required></v-text-field>
     <v-text-field v-model="body" name="body" :counter="10" label="Cuerpo" required></v-text-field>
     <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="Id Usuario" required></v-text-field>
     <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
       Registrar
     </v-btn>
-    <v-btn color="red-darken-4" variant="outlined" @click="redirection">
+    <v-btn color="red-darken-4" variant="outlined" @click="goBack">
       Cancelar
     </v-btn>
 
   </form>
+  </side-bar-menu>
 </template>
 
 <script>
 import dataPost from '../utils/data';
+import AppBarComponent from './AppBarComponent.vue';
+import SideBarMenu from './SideBarMenu.vue';
 export default {
   components: {
+    AppBarComponent,
+    SideBarMenu
   },
   data: () => ({
     title: '',
@@ -36,7 +43,6 @@ export default {
           timer: 1500
         })
       }
-
       const dataForm = {
         id: dataPost.length + 1,
         title: this.title,
@@ -55,14 +61,15 @@ export default {
 
       console.log(dataPost)
       this.clear();
+      this.$router.push('/')
     },
     clear() {
       this.title = ''
       this.body = ''
       this.userId = ''
     },
-    redirection() {
-      window.location.href = '/'
+    goBack() {
+      window.history.go(-1);
     }
   },
 }
