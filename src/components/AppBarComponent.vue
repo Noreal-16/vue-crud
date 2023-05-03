@@ -27,11 +27,23 @@ export default {
                 if (result.isConfirmed) {
                     localStorage.removeItem('user');
                     localStorage.removeItem('email');
-                    this.$swal(`Bye`, '', 'success').then(() => {
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Bye`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
                         this.$router.push('/auth')
                     })
                 } else if (result.isDenied) {
-                    this.$swal('No se guardaron los cambios', '', 'info')
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: `Gracias, Continuemos navegando`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
                 }
             })
 

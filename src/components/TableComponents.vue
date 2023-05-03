@@ -68,7 +68,13 @@ export default {
                     if (indiceArray !== -1) {
                         this.desserts.splice(indiceArray, 1);
                     }
-                    this.$swal(`se elimino correctamente el registro ${id}`, '', 'success')
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Se elimino el registro ${id}`,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
                 } else if (result.isDenied) {
                     this.$swal('No se guardaron los cambios', '', 'info')
                 }
