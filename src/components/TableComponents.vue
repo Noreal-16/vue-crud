@@ -26,7 +26,7 @@
                 <td>{{ item.body }}</td>
                 <td>{{ item.userId }}</td>
                 <td style="display: flex; justify-content: center; align-items: center;">
-                    <ModalUpdateComponent :idPosts="item.id" />
+                    <ModalUpdateComponent :idPosts="item.id" :dataUpdate="desserts" />
                     <v-btn class="text-none text-subtitle-1 d-flex justify-content-center" color="red-darken-4" size="small"
                         variant="outlined" prepend-icon="mdi-delete-forever" @click="deleteById(item.id)">
                     </v-btn>

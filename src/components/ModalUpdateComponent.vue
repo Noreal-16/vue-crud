@@ -29,13 +29,14 @@
     </v-row>
 </template>
 <script>
-import dataPost from '../utils/data';
+//import dataPost from '../utils/data';
 
 import mitt from 'mitt'
 const emtter = mitt();
 export default {
     props: {
-        idPosts: Number
+        idPosts: Number,
+        dataUpdate: Array
     },
     data() {
         return {
@@ -51,11 +52,11 @@ export default {
     },
     mounted() {
         this.getPostById(),
-            this.desserts = dataPost
+            this.desserts = this.dataUpdate
     },
     methods: {
         getPostById() {
-            const dataFind = dataPost.find(post => post.id === this.idPosts);
+            const dataFind = this.dataUpdate.find(post => post.id === this.idPosts);
             if (dataFind) {
                 this.title = dataFind.title;
                 this.body = dataFind.body;
@@ -64,7 +65,7 @@ export default {
 
         },
         updatePosts() {
-            const dataFind = dataPost.find(post => post.id === this.idPosts);
+            const dataFind = this.dataUpdate.find(post => post.id === this.idPosts);
             if (dataFind) {
                 dataFind.id = this.idPosts;
                 dataFind.title = this.title;

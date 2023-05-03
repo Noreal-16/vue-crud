@@ -1,18 +1,18 @@
 <template>
-  <app-bar-component/>
+  <app-bar-component />
   <side-bar-menu>
-  <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh; margin-top: 10vh;">
-    <v-text-field v-model="title" name="title" :counter="10" label="Título" required></v-text-field>
-    <v-text-field v-model="body" name="body" :counter="10" label="Cuerpo" required></v-text-field>
-    <v-text-field v-model="userId" name="userId" :counter="10" type="number" label="Id Usuario" required></v-text-field>
-    <v-btn class="mr-4" type="submit" color="teal-darken-2" variant="outlined" :disabled="invalid">
-      Registrar
-    </v-btn>
-    <v-btn color="red-darken-4" variant="outlined" @click="goBack">
-      Cancelar
-    </v-btn>
+    <form class="form" @submit.prevent="registerPost" style="margin-bottom: 10vh; margin-top: 10vh;">
+      <v-text-field v-model="title" name="title" :counter="30" label="Título" :error-messages="inputErrorMsg" required></v-text-field>
+      <v-text-field v-model="body" name="body" :counter="30" label="Cuerpo" :error-messages="inputErrorMsg" required></v-text-field>
+      <v-text-field v-model="userId" name="userId"  type="number" label="Id Usuario" required></v-text-field>
+      <v-btn class="mr-4" :disabled="lengthInputs > 30 " type="submit" color="teal-darken-2" variant="outlined" >
+        Registrar
+      </v-btn>
+      <v-btn color="red-darken-4" variant="outlined" @click="goBack">
+        Cancelar
+      </v-btn>
 
-  </form>
+    </form>
   </side-bar-menu>
 </template>
 
@@ -29,8 +29,13 @@ export default {
     title: '',
     body: '',
     userId: '',
+    inputErrorMsg:''
   }),
-
+  computed: {
+    lengthInputs() {
+      return this.title.length || this.body.length
+    }
+  },
   methods: {
     registerPost() {
 
@@ -43,8 +48,14 @@ export default {
           timer: 1500
         })
       }
+
+      if (this.lengthInputs > 30) {
+        this.inputErrorMsg = 'No se puede exceder en la cantidas de carácteres permitidos'
+      }
+
+      this.inputErrorMsg =''
       const dataForm = {
-        id: dataPost.length + 1,
+        id: dataPost.length + 3,
         title: this.title,
         body: this.body,
         userId: this.userId
